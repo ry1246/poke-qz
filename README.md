@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -73,3 +74,7 @@ export default defineConfig([
 ])
 
 ```
+=======
+# poke-qz
+Pokemon quiz site. It use the PokeAPI!
+>>>>>>> e91affddaf50dd9cdbdc3c8612c5e65a7a06d214
