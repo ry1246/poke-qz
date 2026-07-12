@@ -1,39 +1,12 @@
-import { useEffect, useState } from 'react'
-import { fetchStatsQuiz } from '../api/pokeapi'
-import type { StatsQuiz } from '../api/pokeapi'
+import { useQuiz } from '../hooks/useQuiz'
 
 function SilhouetteQuizPage() {
-  const [quiz, setQuiz] = useState<StatsQuiz | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [selectedId, setSelectedId] = useState<number | null>(null)
 
-  // 1 問読み込む
-  async function loadQuiz() {
-    setLoading(true)
-    setError(null)
-    setSelectedId(null)
-    try {
-      const next = await fetchStatsQuiz();
-      setQuiz(next)
-    } catch (e) {
-      setError(e instanceof Error ? e.message : '取得に失敗しました')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // マウント時に1度だけ実行
-  useEffect(() => {
-    loadQuiz()
-  }, [])
+  const { quiz, loading, error, answered, isCorrect, loadQuiz, setSelectedId } = useQuiz()
 
   if (loading) return <p>読み込み中...</p>
   if (error) return <p>エラー : {error}</p>
   if (!quiz) return null
-
-  const answered = selectedId !== null
-  const isCorrect = selectedId === quiz.answer.id
 
   return (
     <div>

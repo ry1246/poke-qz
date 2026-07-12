@@ -3,17 +3,22 @@ import HomePage from './pages/HomePage'
 import StatsQuizPage from './pages/StatsQuizPage'
 import SilhouetteQuizPage from './pages/SilhouetteQuizPage'
 
+// アクティブリンクを太字にする
+const navLinkStyle = ({ isActive }: { isActive: boolean }) => ({
+  fontWeight: isActive ? 'bold' : 'normal',
+})
+
 // ナビゲーション共通レイアウト
 function Layout() {
   return (
     <>
       <header>
         <nav>
-          <NavLink to="/">Home</NavLink>
+          <NavLink to="/" style={navLinkStyle}>Home</NavLink>
           {' | '}
-          <NavLink to="/quiz/stats">Stats Qz</NavLink>
+          <NavLink to="/quiz/stats" style={navLinkStyle}>Stats Qz</NavLink>
           {' | '}
-          <NavLink to="/quiz/silhouette">Silhouette Qz</NavLink>
+          <NavLink to="/quiz/silhouette" style={navLinkStyle}>Silhouette Qz</NavLink>
         </nav>
       </header>
       <main>
