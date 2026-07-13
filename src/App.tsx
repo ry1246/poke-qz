@@ -14,11 +14,17 @@ function Layout() {
     <>
       <header>
         <nav>
-          <NavLink to="/" style={navLinkStyle}>Home</NavLink>
+          <NavLink to="/" style={navLinkStyle}>
+            Home
+          </NavLink>
           {' | '}
-          <NavLink to="/quiz/stats" style={navLinkStyle}>Stats Qz</NavLink>
+          <NavLink to="/quiz/stats" style={navLinkStyle}>
+            Stats Qz
+          </NavLink>
           {' | '}
-          <NavLink to="/quiz/silhouette" style={navLinkStyle}>Silhouette Qz</NavLink>
+          <NavLink to="/quiz/silhouette" style={navLinkStyle}>
+            Silhouette Qz
+          </NavLink>
         </nav>
       </header>
       <main>
@@ -34,7 +40,7 @@ function App() {
       <Route element={<Layout />}>
         <Route index element={<HomePage />}></Route>
         <Route path="quiz/stats" element={<StatsQuizPage />} />
-        <Route path="quiz/silhouette" element={<SilhouetteQuizPage />}/>
+        <Route path="quiz/silhouette" element={<SilhouetteQuizPage />} />
       </Route>
     </Routes>
   )

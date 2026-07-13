@@ -1,4 +1,4 @@
-import type { PokeApiPokemon, Pokemon, PokemonStats } from "../types/pokemon";
+import type { PokeApiPokemon, Pokemon, PokemonStats } from '../types/pokemon'
 
 const POKEAPI_BASE = 'https://pokeapi.co/api/v2'
 
@@ -19,12 +19,16 @@ function toPokemonStats(apiStats: PokeApiPokemon['stats']): PokemonStats {
 
   // 初期化
   const result: PokemonStats = {
-    hp: 0, attack: 0, defense: 0,
-    specialAttack: 0, specialDefense: 0, speed: 0,
+    hp: 0,
+    attack: 0,
+    defense: 0,
+    specialAttack: 0,
+    specialDefense: 0,
+    speed: 0,
   }
 
   for (const s of apiStats) {
-    const  key = map[s.stat.name]
+    const key = map[s.stat.name]
     if (key) result[key] = s.base_stat
   }
   return result
@@ -58,9 +62,9 @@ export async function fetchRandomPokemon(): Promise<Pokemon> {
 }
 
 // 1問分のデータ
-export interface StatsQuiz {
-  answer: Pokemon    // 正解
-  choices: Pokemon[]      // ダミー
+export interface Quiz {
+  answer: Pokemon // 正解
+  choices: Pokemon[] // ダミー
 }
 
 // 配列をシャッフル
@@ -77,7 +81,7 @@ function shuffle<T>(array: T[]): T[] {
 function pickUniqueIds(count: number): number[] {
   const ids = new Set<number>()
   while (ids.size < count) {
-    const id = 
+    const id =
       Math.floor(Math.random() * (POKEDEX_MAX - POKEDEX_MIN + 1)) + POKEDEX_MIN
     ids.add(id)
   }
@@ -85,8 +89,8 @@ function pickUniqueIds(count: number): number[] {
 }
 
 // 4択の1問分を取得
-export async function fetchStatsQuiz(): Promise<StatsQuiz> {
-  const ids = pickUniqueIds(4);
+export async function fetchQuiz(): Promise<Quiz> {
+  const ids = pickUniqueIds(4)
   const pokemons = await Promise.all(ids.map((id) => fetchPokemon(id)))
   const answer = pokemons[0]
   const choices = shuffle(pokemons)

@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
-import { fetchStatsQuiz } from '../api/pokeapi'
-import type { StatsQuiz } from '../api/pokeapi'
+import { fetchQuiz } from '../api/pokeapi'
+import type { Quiz } from '../api/pokeapi'
 
 // クイズ1問分の状態と操作をまとめて返す
 export function useQuiz() {
-  const [quiz, setQuiz] = useState<StatsQuiz | null>(null)
+  const [quiz, setQuiz] = useState<Quiz | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [selectedId, setSelectedId] = useState<number | null>(null)
@@ -15,7 +15,7 @@ export function useQuiz() {
     setError(null)
     setSelectedId(null)
     try {
-      setQuiz(await fetchStatsQuiz())
+      setQuiz(await fetchQuiz())
     } catch (e) {
       setError(e instanceof Error ? e.message : '取得に失敗しました')
     } finally {
@@ -25,23 +25,22 @@ export function useQuiz() {
 
   // マウント時に1問目を読み込む
   useEffect(() => {
-    let ignore = false
-    ;(async () => {
-      try {
-        const q = await fetchStatsQuiz()
-        if (!ignore) setQuiz(q)
-      } catch (e) {
-        if (!ignore) setError(e instanceof Error ? e.message : '取得に失敗しました')
-      } finally {
-        if (!ignore) setLoading(false)
-      }
-    })()
-    return () => { ignore = true }
-  }, [])
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadQuiz()
+  }, [loadQuiz])
 
   // 派生値もここで計算
   const answered = selectedId !== null
   const isCorrect = quiz !== null && selectedId === quiz.answer.id
 
-  return { quiz, loading, error, selectedId, answered, isCorrect, loadQuiz, setSelectedId }
+  return {
+    quiz,
+    loading,
+    error,
+    selectedId,
+    answered,
+    isCorrect,
+    loadQuiz,
+    setSelectedId,
+  }
 }

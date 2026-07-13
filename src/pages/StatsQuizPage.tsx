@@ -2,7 +2,7 @@ import { useQuiz } from '../hooks/useQuiz'
 import type { PokemonStats } from '../types/pokemon'
 
 // 表示用: statsのキーと日本語の対応
-const STATS_LABELS: { key: keyof PokemonStats; label: string }[] =  [
+const STATS_LABELS: { key: keyof PokemonStats; label: string }[] = [
   { key: 'hp', label: 'HP' },
   { key: 'attack', label: 'こうげき' },
   { key: 'defense', label: 'ぼうぎょ' },
@@ -12,7 +12,8 @@ const STATS_LABELS: { key: keyof PokemonStats; label: string }[] =  [
 ]
 
 function StatsQuizPage() {
-  const { quiz, loading, error, answered, isCorrect, loadQuiz, setSelectedId } = useQuiz()
+  const { quiz, loading, error, answered, isCorrect, loadQuiz, setSelectedId } =
+    useQuiz()
 
   if (loading) return <p>読み込み中...</p>
   if (error) return <p>エラー: {error}</p>
@@ -27,18 +28,22 @@ function StatsQuizPage() {
       <ul>
         {STATS_LABELS.map(({ key, label }) => (
           <li key={key}>
-          {label}: {quiz.answer.stats[key]}
+            {label}: {quiz.answer.stats[key]}
           </li>
         ))}
       </ul>
 
       {/* 4択ボタン */}
       <div>
-      {quiz.choices.map((p) => (
-        <button key={p.id} onClick={() => setSelectedId(p.id)} disabled={answered} >
-          {p.name}
-        </button>
-      ))}
+        {quiz.choices.map((p) => (
+          <button
+            key={p.id}
+            onClick={() => setSelectedId(p.id)}
+            disabled={answered}
+          >
+            {p.name}
+          </button>
+        ))}
       </div>
 
       {/* 回答後の結果 */}
